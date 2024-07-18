@@ -9,6 +9,7 @@ namespace TrackOrders.Data.Seed
         public static void Seed(this TrackOrdersContext context, IPasswordHashService passwordHashService)
         {
             UserSeed.Seed(context, passwordHashService);
+            OrderSeed.Seed(context);
         }
     }
 }

@@ -45,7 +45,19 @@ namespace TrackOrders.Controllers
         {
             var orders = await _context.Orders.ToListAsync();
 
-            return Ok(orders);
+            var listResponse = _mapper.Map<List<Order>, List<OrderResponse>>(orders);
+
+            return Ok(listResponse);
+        }
+
+        [HttpGet("{orderNumber}")]
+        public async Task<IActionResult> GetByOrderNumber(string orderNumber)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Number.ToUpper() == orderNumber.ToUpper());
+
+            var response = _mapper.Map<OrderResponse>(order);
+            
+            return Ok(response);
         }
 
     }

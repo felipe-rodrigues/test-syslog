@@ -11,6 +11,7 @@ namespace TrackOrders.Data.Context
         public DbSet<User> Users { get; init; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<NotificationLog> NotificationLogs { get; set; }
 
         public TrackOrdersContext()
         {

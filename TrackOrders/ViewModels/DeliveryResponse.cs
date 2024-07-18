@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson;
 
-namespace TrackOrders.Data.Entities
+namespace TrackOrders.ViewModels
 {
-    public class Delivery
+    public class DeliveryResponse
     {
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
         public string OrderNumber { get; set; }
         public bool HasDelivered { get; set; }
         public DateTime ExecutedAt { get; set; }
