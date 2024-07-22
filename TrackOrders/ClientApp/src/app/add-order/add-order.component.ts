@@ -18,7 +18,7 @@ export class AddOrderComponent implements OnInit {
       descricao: ['', Validators.required],
       valor: ['', [Validators.required, Validators.min(0)]],
       endereco: this.fb.group({
-        cep: ['', Validators.required],
+        cep: ['', Validators.required,Validators.pattern("^[0-9]*$")],
         rua: ['', Validators.required],
         numero: ['', Validators.required],
         bairro: ['', Validators.required],
