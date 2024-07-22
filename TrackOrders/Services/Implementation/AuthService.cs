@@ -59,7 +59,7 @@ namespace TrackOrders.Services.Implementation
                     Subject = new ClaimsIdentity(new Claim[] {
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim("UserId", user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.Name),
+                        new Claim(ClaimTypes.Name, user.Name ?? user.Email),
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

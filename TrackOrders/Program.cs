@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc.Routing;
 using TrackOrders;
 using TrackOrders.Configuration;
 using TrackOrders.Data;
 using TrackOrders.Data.Context;
 using TrackOrders.Data.Seed;
+using TrackOrders.Hubs;
 using TrackOrders.Services;
 using TrackOrders.Services.Interfaces;
 
@@ -25,8 +27,23 @@ builder.Services.AddMapper();
 var settings = builder.Configuration.GetSection("Settings").Get<AppSettings>();
 builder.Services.AddJwtAuthentication(settings);
 builder.Services.AddSwaggerGen();
+
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("Settings"));
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:44498", "https://localhost:7225", "http://localhost:5240")
+                .AllowAnyHeader()
+                .WithMethods("GET", "POST")
+                .AllowCredentials();
+        });
+});
+
+
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,6 +83,10 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors();
+app.MapHub<NotificationHub>("/notificationHub");
+
+
 
 
 app.MapControllerRoute(

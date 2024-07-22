@@ -19,25 +19,56 @@
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
+
+      <ul class="navbar-nav flex-grow" *ngIf="!(currentUser | async) else logged">
+        <li
+          class="nav-item"
+          [routerLinkActive]="['link-active']"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['link-active']">
+          <a class="nav-link text-dark" [routerLink]="['/login']"
+            >Login</a
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
+        </li>
+      </ul>
+
+        <ng-template #logged>
+          <ul class="navbar-nav flex-grow">
+            <li
+              class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }"
             >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
+              <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/notifications']"
+                >Notificações
+                  <i class="fas fa-bell"></i>
+                  <span class="badge bg-secondary">{{ unreadNotifications }}</span>
+                </a
+              >
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/orders']"
+                >Pedidos</a
+              >
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/add-user']"
+                >Adicionar Usuario</a
+              >
+            </li>
+
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <button type="button" class="nav-link text-dark btn" (click)="logout()">Logout</button>
+            </li>
+          </ul>
+        </ng-template>
+
       </div>
     </div>
   </nav>

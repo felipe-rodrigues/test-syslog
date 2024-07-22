@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using TrackOrders.Data.Context;
+using Microsoft.AspNetCore.SignalR.Client;
+using TrackOrders.Hubs;
 
 namespace TrackOrders.Test.Integration.ApiBase
 {
@@ -76,6 +78,22 @@ namespace TrackOrders.Test.Integration.ApiBase
             var response = await req.Content.ReadAsAsync<UserLoginResponse>();
 
             return response.Token;
+        }
+
+        public async Task<HubConnection> GetNotificationHub()
+        {
+            var handler = Server.CreateHandler();
+
+            var hub = new HubConnectionBuilder()
+                .WithUrl("ws://localhost/notificationHub", o =>
+                {
+                    o.HttpMessageHandlerFactory = _ => handler;
+                })
+                .Build();
+
+            await hub.StartAsync();
+            
+            return hub;
         }
 
         async Task IAsyncLifetime.DisposeAsync()

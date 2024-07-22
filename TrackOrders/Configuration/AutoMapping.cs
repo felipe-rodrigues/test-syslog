@@ -20,8 +20,6 @@ namespace TrackOrders.Configuration
             CreateMap<User,UserResponse>();
 
             CreateMap<AddressRequest, Address>();
-
-            CreateMap<Delivery, DeliveryResponse>();
         }
     }
 }

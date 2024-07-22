@@ -1,0 +1,56 @@
+<br>
+<h1>
+  Adicionar Usuário
+</h1>
+
+<br>
+
+<div class="row">
+  <div class="col-md-12">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let alert of alerts">
+        <strong>{{ alert.message }}</strong>
+        <button type="button" class="close" data-dismiss="alert" (click)="close(alert)" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  </div>
+</div>
+
+<form [formGroup]="userForm" (ngSubmit)="submitForm()">
+  <div class="form-group">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" formControlName="name" class="form-control">
+    <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-danger">
+      Nome é obrigatório.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" class="form-control">
+    <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+      <div *ngIf="userForm.get('email')?.errors?.required">Email é obrigatório.</div>
+      <div *ngIf="userForm.get('email')?.errors?.email">Email inválido.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" formControlName="password" class="form-control">
+    <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger">
+      <div *ngIf="userForm.get('password')?.errors?.required">Senha é obrigatória.</div>
+      <div *ngIf="userForm.get('password')?.errors?.minlength">Senha deve ter no mínimo 6 caracteres.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmPassword">Confirmação de password:</label>
+    <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+    <div *ngIf="userForm.errors?.mismatch && userForm.get('confirmPassword')?.touched" class="text-danger">
+      As passwords não coincidem.
+    </div>
+  </div>
+  <br>
+
+  <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Salvar</button>
+</form>

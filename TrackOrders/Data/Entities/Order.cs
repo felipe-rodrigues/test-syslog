@@ -13,5 +13,6 @@ namespace TrackOrders.Data.Entities
         //TODO: talvez alterar para enum , se considerar mais casos além de entregue ou não entregue
         public bool HasDelivered { get; set; }
         public DateTime CreatedDate { get; set; }
+        public ICollection<Delivery> Deliveries { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace TrackOrders.ViewModels
         public Address DeliveryAddress { get; set; }
         public bool HasDelivered { get; set; }
         public DateTime CreatedDate { get; set; }
+        public IEnumerable<Delivery> Deliveries { get; set; }
     }
 }

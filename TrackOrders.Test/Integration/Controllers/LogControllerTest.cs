@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TrackOrders.Test.Integration.ApiBase;
 using TrackOrders.ViewModels;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace TrackOrders.Test.Integration.Controllers
 {
@@ -50,10 +51,27 @@ namespace TrackOrders.Test.Integration.Controllers
                 }
             };
 
+            var hub = await _api.GetNotificationHub();
+            var message = "";
+
+            hub.On<string>("OrderEvents", msg =>
+            {
+                message = msg;
+            });
+
             var orderResponse = await client.PostAsJsonAsync("/api/order", orderRequest);
             orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var addViewNotificationCall = await client.PostAsJsonAsync($"/api/log/order/{orderRequest.Number}/viewed", new { });
+            var notificationRequest = new LogOrderNotificationRequest()
+            {
+                IsNewOrderNotification = true,
+                HasDelivered = false,
+                Message = message,
+                OrderNumber = orderRequest.Number,
+                Attempt = null
+            };
+
+            var addViewNotificationCall = await client.PostAsJsonAsync($"/api/log/order/{orderRequest.Number}/viewed", notificationRequest);
             addViewNotificationCall.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 

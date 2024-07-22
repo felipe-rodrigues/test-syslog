@@ -1,0 +1,83 @@
+<h1>Adicionar Pedido</h1>
+
+<br>
+
+<form [formGroup]="orderForm" (ngSubmit)="submitForm()">
+  <div class="form-group">
+    <label for="numeroPedido">Número do Pedido:</label>
+    <input type="text" id="numeroPedido" formControlName="numeroPedido" class="form-control">
+    <div *ngIf="orderForm.get('numeroPedido')?.invalid && orderForm.get('numeroPedido')?.touched" class="text-danger">
+      Número do Pedido é obrigatório.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" formControlName="descricao" class="form-control">
+    <div *ngIf="orderForm.get('descricao')?.invalid && orderForm.get('descricao')?.touched" class="text-danger">
+      Descrição é obrigatória.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor" formControlName="valor" class="form-control">
+    <div *ngIf="orderForm.get('valor')?.invalid && orderForm.get('valor')?.touched" class="text-danger">
+      Valor é obrigatório e deve ser positivo.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Endereço de Entrega:</label>
+    <div formGroupName="endereco">
+      <div class="form-group">
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" formControlName="cep" class="form-control" (blur)="loadAddress()">
+        <div *ngIf="orderForm.get('endereco.cep')?.invalid && orderForm.get('endereco.cep')?.touched" class="text-danger">
+          CEP é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="rua">Rua:</label>
+        <input type="text" id="rua" formControlName="rua" class="form-control">
+        <div *ngIf="orderForm.get('endereco.rua')?.invalid && orderForm.get('endereco.rua')?.touched" class="text-danger">
+          Rua é obrigatória.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="numero">Número:</label>
+        <input type="text" id="numero" formControlName="numero" class="form-control">
+        <div *ngIf="orderForm.get('endereco.numero')?.invalid && orderForm.get('endereco.numero')?.touched" class="text-danger">
+          Número é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="bairro">Bairro:</label>
+        <input type="text" id="bairro" formControlName="bairro" class="form-control">
+        <div *ngIf="orderForm.get('endereco.bairro')?.invalid && orderForm.get('endereco.bairro')?.touched" class="text-danger">
+          Bairro é obrigatório.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" formControlName="cidade" class="form-control">
+        <div *ngIf="orderForm.get('endereco.cidade')?.invalid && orderForm.get('endereco.cidade')?.touched" class="text-danger">
+          Cidade é obrigatória.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado:</label>
+        <input type="text" id="estado" formControlName="estado" class="form-control">
+        <div *ngIf="orderForm.get('endereco.estado')?.invalid && orderForm.get('endereco.estado')?.touched" class="text-danger">
+          Estado é obrigatório.
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid">Salvar</button>
+</form>
+
+
+
+

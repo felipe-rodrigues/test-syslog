@@ -1,0 +1,25 @@
+
+<br>
+<h1>Pedidos  <button type="button" class="btn btn-primary" (click)="add()">Adicionar</button></h1>
+<br>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="orders">
+  <thead>
+    <tr>
+      <th>Número</th>
+      <th>Descrição</th>
+      <th>Valor</th>
+      <th>Situação</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <td>{{ order.number }}</td>
+      <td>{{ order.description }}</td>
+      <td>{{ order.value }}</td>
+      <td>{{ order.hasDelivered ? "Entregue" : "A caminho" }}</td>
+      <td><button type="button" class="btn btn-success" (click)="saveAttempt(order.number,true)" *ngIf="!order.hasDelivered">Entregue</button>  <button type="button" class="btn btn-warning" style="margin-left: 5px;" (click)="saveAttempt(order.number,false)" *ngIf="!order.hasDelivered">Registrar Tentativa</button></td>
+    </tr>
+  </tbody>
+</table>

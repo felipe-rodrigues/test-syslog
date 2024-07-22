@@ -1,0 +1,21 @@
+<br>
+<h1>Notificações</h1>
+<br>
+
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="notifications">
+  <thead>
+    <tr>
+      <th>Data e Hora</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let notification of notifications">
+      <td>{{ (notification.dateTime | date:'dd/MM/yyyy HH:mm:ss')  }}</td>
+      <td>{{ notification.message }}</td>
+      <td><button type="button" class="btn btn-primary"  *ngIf="!notification.viewed" (click)="saveViewedNotification(notification)">Marcar como vista</button> </td>
+    </tr>
+  </tbody>
+</table>
